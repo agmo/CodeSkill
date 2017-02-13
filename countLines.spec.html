@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>countLines Tests</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-2.1.1.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/qunit/qunit-2.1.1.js"></script>
+<script src="countLines.js"></script>
+<script>
+    QUnit.test("should return 1 if text contains fewer characters than expected line length", function (assert) {
+        var input = "abc";
+        var lineLength = 4;
+        var expected = 1;
+
+        assert.equal(countLines(input, lineLength), expected);
+    });
+
+    QUnit.test("should return 1 if text contains the same no of characters as expected line length", function (assert) {
+        var input = "abc";
+        var lineLength = 3;
+        var expected = 1;
+
+        assert.equal(countLines(input, lineLength), expected);
+    });
+
+    QUnit.test("should return 2 for text that can be split into 2 lines", function (assert) {
+        var input = "abc def";
+        var lineLength = 3;
+        var expected = 2;
+
+        assert.equal(countLines(input, lineLength), expected);
+    });
+
+    QUnit.test("should return 3 for text that can be split into 3 lines", function (assert) {
+        var input = "ab cd ef";
+        var lineLength = 3;
+        var expected = 3;
+
+        assert.equal(countLines(input, lineLength), expected);
+
+        input = "Policz ilość linijek tekstu przy założeniu, że każda linijka może mieć nie więcej niż 80 znaków." +
+            "Jeśli liczba znaków  w linii jest większa należy ją złamać wcześniej na spacji.";
+        lineLength = 80;
+        expected = 3;
+        //Expected lines:
+//        Policz ilość linijek tekstu przy założeniu, że każda linijka może mieć nie
+//        więcej niż 80 znaków. Jeśli liczba znaków  w linii jest większa należy ją
+//        złamać wcześniej na spacji.
+
+        assert.equal(countLines(input, lineLength), expected);
+    });
+
+    QUnit.test("should return 8 for text that can be split into 8 lines", function (assert) {
+        var input = "abc def gh i jkl mn opr stuwx yz";
+        //Expected lines:
+//        abc
+//        def
+//        gh i
+//        jkl
+//        mn
+//        opr
+//        stuwx
+//        yz
+        var lineLength = 5;
+        var expected = 8;
+
+        assert.equal(countLines(input, lineLength), expected);
+    })
+</script>
+</body>
+</html>

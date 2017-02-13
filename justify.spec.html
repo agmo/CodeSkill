@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>justify Tests</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-2.1.1.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/qunit/qunit-2.1.1.js"></script>
+<script src="justify.js"></script>
+<script>
+    QUnit.test("should justify the first shorter line to match the second longer one", function (assert) {
+        var input = 'Ala ma kota i psa.\nAlicja ma tylko kota.';
+        var expected = 'Ala  ma  kota  i psa.\nAlicja ma tylko kota.';
+        var result = justify(input);
+        assert.equal(result, expected);
+
+        console.log(input);
+        console.log(result);
+    });
+
+    QUnit.test("should justify the first and second shorter lines to match the last longest one", function (assert) {
+        var input = 'Ala ma kota i psa.\nAlicja ma tylko kota.\nTomasz jest właścicielem psa.';
+        var expected = 'Ala    ma    kota    i   psa.\nAlicja    ma    tylko   kota.\nTomasz jest właścicielem psa.';
+        var result = justify(input);
+        assert.equal(result, expected);
+
+        console.log(input);
+        console.log(result);
+    });
+
+    QUnit.test("should justify all shorter lines (excep when the longest line is twice as long) " +
+        "to match the longest one", function (assert) {
+        var input = "Każdy ma jakiegoś bzika,\n" +
+            "Każdy jakieś hobby ma,\n" +
+            "a ja w domu mam chomika,\n" +
+            "kota, rybki oraz psa.\n" +
+            "I lwa!";
+        var expected = "Każdy ma jakiegoś bzika,\n" +
+            "Każdy  jakieś  hobby ma,\n" +
+            "a ja w domu mam chomika,\n" +
+            "kota,  rybki  oraz  psa.\n" +
+            "I lwa!";
+        var result = justify(input);
+        assert.equal(result, expected);
+
+        console.log(input);
+        console.log(result);
+    });
+
+    QUnit.test("shouldn't justify a line if the longest line is twice as long", function (assert) {
+        var input = "Ala i kot.\nAlicja ma tylko kota";
+        var expected = input;
+        var result = justify(input);
+
+        assert.equal("Ala i kot.".length, 10);
+        assert.equal("Alicja ma tylko kota".length, 20, "The second line is twice as long as the first one");
+        assert.equal(result, expected);
+
+        console.log(input);
+        console.log(result);
+    });
+
+</script>
+</body>
+</html>

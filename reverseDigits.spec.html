@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reverseDigits Tests</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-2.1.1.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/qunit/qunit-2.1.1.js"></script>
+<script src="reverseDigits.js"></script>
+<script>
+    QUnit.test("for one-digit numbers, should return an unchanged number", function (assert) {
+        assert.equal(reverseDigits(1), 1, "Returns 1 for 1");
+    });
+
+    QUnit.test("for a negative number, should return a negative number", function (assert) {
+        assert.equal(reverseDigits(-1), -1, "Returns -1 for -1");
+    });
+
+    QUnit.test("for multiple-digit numbers, should return a reversed multiple-digit number", function (assert) {
+        assert.equal(reverseDigits(12), 21, "Returns 21 for 12");
+        assert.equal(reverseDigits(123), 321, "Returns 321 for 123");
+    });
+
+    QUnit.test("for a multiple-digit number with zero under units/tens etc. digit, shouldn't return leading zeros, " +
+        "so that 100 should produce 1, not 001", function (assert) {
+        assert.equal(reverseDigits(120), 21, "Returns 21 for 120");
+        assert.equal(reverseDigits(100), 1, "Returns 1 for 100");
+        assert.equal(reverseDigits(1000), 1, "Returns 1 for 1000");
+    });
+
+    QUnit.test("for a multiple-digit number with a zero under any-but-last digit, should return a digit of the same length", function (assert) {
+        assert.equal(reverseDigits(101), 101, "Returns 101 for 101");
+        assert.equal(reverseDigits(1001), 1001, "Returns 1001 for 1001");
+        assert.equal(reverseDigits(10001), 10001, "Returns 10001 for 10001");
+        assert.equal(reverseDigits(10002), 20001, "Returns 20001 for 10002");
+        assert.equal(reverseDigits(10203), 30201, "Returns 30201 for 10203");
+        assert.equal(reverseDigits(1002340), 432001, "Returns 432001 for 1002340");
+    });
+</script>
+</body>
+</html>
