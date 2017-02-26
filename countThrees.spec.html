@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>countThrees Tests</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-2.1.1.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/qunit/qunit-2.1.1.js"></script>
+<script src="countThrees.js"></script>
+<script>
+    QUnit.test("throws if input is invalid", function (assert) {
+        assert.equal(countThreesInRange(), "Invalid input", "No params");
+        assert.equal(countThreesInRange(0), "Invalid input", "One param missing");
+        assert.equal(countThreesInRange("20","10"), "Invalid input", "Params not numbers");
+        assert.equal(countThreesInRange(20, 10), "Invalid input", "Stop < start");
+        assert.equal(countThreesInRange(-1, 10), "Invalid input", "Start < 0");
+        assert.equal(countThreesInRange(0, 9007199254740992), "Invalid input", "Stop exceeds max safe int " +
+            "(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER)");
+    });
+
+    QUnit.test('returns expected result', function (assert) {
+        function test(start, stop) {
+            var actual;
+            var expected;
+
+            actual = countThreesInRange(start, stop);
+            console.log("actual", actual);
+            expected = verifyCountThrees(start, stop);
+            console.log("expected", expected);
+            assert.equal(actual, expected);
+            assert.equal(actual, expected);
+        }
+
+        test(0,0);
+        test(0,3);
+        test(0,13);
+        test(0,99);
+        test(100,1000);
+        test(3,3333);
+        test(123,123);
+
+        assert.equal(countThreesInRange(0,9007199254740991), 7358313138871845);
+    });
+
+    function verifyCountThrees(start, end) {
+        var counter = 0;
+
+        for (var i = start; i <= end; i++) {
+            if (String(i).indexOf('3') !== -1) {
+                counter++;
+            }
+        }
+
+        return counter;
+    }
+</script>
+</body>
+</html>
