@@ -12,6 +12,7 @@
 <script src="reverseDigits.js"></script>
 <script>
     QUnit.test("for one-digit numbers, should return an unchanged number", function (assert) {
+        assert.equal(reverseDigits(0), 0, "Returns 0 for 0");
         assert.equal(reverseDigits(1), 1, "Returns 1 for 1");
     });
 
@@ -31,14 +32,28 @@
         assert.equal(reverseDigits(1000), 1, "Returns 1 for 1000");
     });
 
-    QUnit.test("for a multiple-digit number with a zero under any-but-last digit, should return a digit of the same length", function (assert) {
-        assert.equal(reverseDigits(101), 101, "Returns 101 for 101");
-        assert.equal(reverseDigits(1001), 1001, "Returns 1001 for 1001");
-        assert.equal(reverseDigits(10001), 10001, "Returns 10001 for 10001");
-        assert.equal(reverseDigits(10002), 20001, "Returns 20001 for 10002");
-        assert.equal(reverseDigits(10203), 30201, "Returns 30201 for 10203");
-        assert.equal(reverseDigits(1002340), 432001, "Returns 432001 for 1002340");
-    });
+    QUnit.test(
+        "for a multiple-digit number with a zero under any-but-last digit, should return a digit of the same length",
+        function (assert) {
+            assert.equal(reverseDigits(101), 101, "Returns 101 for 101");
+            assert.equal(reverseDigits(1001), 1001, "Returns 1001 for 1001");
+            assert.equal(reverseDigits(10001), 10001, "Returns 10001 for 10001");
+            assert.equal(reverseDigits(10002), 20001, "Returns 20001 for 10002");
+            assert.equal(reverseDigits(10203), 30201, "Returns 30201 for 10203");
+            assert.equal(reverseDigits(1002340), 432001, "Returns 432001 for 1002340");
+            assert.equal(reverseDigits(1990474529917009), 9007199254740991,
+                "Returns 9007199254740991 for 1990474529917009");
+        });
+
+    QUnit.test("throws for a number that cannot be accurately represented when reversed", function (assert) { //http://www.2ality.com/2013/10/safe-integers.html
+        var input = 3990474529917009;
+
+        assert.throws(function () {
+                reverseDigits(input)
+            },
+            /The converted number cannot be accurately represented/,
+            "Throws an error");
+    })
 </script>
 </body>
 </html>
