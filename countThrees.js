@@ -12,7 +12,7 @@ function countThreesInRange(rangeStart, rangeStop) {
 
         while (number > 0) {
             orderOfMagnitude = getOrderOfMagnitude(number);
-            firstDigit = parseInt(number / Math.floor(Math.pow(10, orderOfMagnitude)));
+            firstDigit = Math.floor(number / Math.pow(10, orderOfMagnitude));
 
             if (firstDigit <= 3) {
                 threesCount += firstDigit * getMaxSingleDigitCount(orderOfMagnitude);
