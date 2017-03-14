@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sumPairs tests</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-2.1.1.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/qunit/qunit-2.1.1.js"></script>
+<script src="sumPairs.js"></script>
+<script>
+    QUnit.test("should return the sum for each consecutive pair of numbers in an array", function (assert) {
+        function test(input, expected) {
+            var actual = sumPairs(input);
+
+            assert.deepEqual(actual, expected);
+        }
+
+        test([1,1], [2]);
+        test([1,1,1,1], [2,2]);
+        test([1,1,1,1,1], [2,2,1]);
+        test([1,3,3,5,6,8], [4,8,14]);
+        //unsafe sums (http://www.2ality.com/2013/10/safe-integers.html)
+        test([9007199254740991,0], [9007199254740991]); //Number.MAX_SAFE_INTEGER = 9007199254740991
+        test([9007199254740992,0], ["skipped"]);
+        test([9007199254740992,9007199254740993], ["skipped"]);
+        test([9007199254740990,3], ["skipped"]);
+        test([9007199254740990,3,1,2], ["skipped",3]);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>isSlotAvailable tests</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-2.1.1.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/qunit/qunit-2.1.1.js"></script>
+<script src="isSlotAvailable.js"></script>
+<script>
+    QUnit.test("should check calendar availability", function (assert) {
+        function test(input, expected) {
+            assert.equal(isSlotAvailable(input), expected);
+        }
+
+        test({
+            start: '2016-01-01 13:00',
+            end: '2016-01-01 13:30'
+        }, false);
+        test({
+            start: '2016-01-01 13:00',
+            end: '2016-01-01 13:19'
+        }, true);
+        test({
+            start: '2016-01-01 08:30',
+            end: '2016-01-01 09:30'
+        }, false);
+        test({
+            start: '2016-01-01 07:30',
+            end: '2016-01-01 08:30'
+        }, false);
+        test({
+            start: '2016-01-01 08:30',
+            end: '2016-01-01 08:40'
+        }, false);
+        test({
+            start: '2016-01-01 07:00',
+            end: '2016-01-01 09:30'
+        }, false);
+        test({
+            start: '2016-01-01 07:00',
+            end: '2016-01-01 07:59'
+        }, true);
+        test({
+            start: '2015-12-31 00:00',
+            end: '2016-01-01 07:59'
+        }, true);
+    });
+</script>
+</body>
+</html>
