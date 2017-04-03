@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>giveChange tests</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.3.0.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="https://code.jquery.com/qunit/qunit-2.3.0.js"></script>
+<script src="giveChange.js"></script>
+<script>
+    QUnit.test("should return coins needed to give change", function (assert) {
+        function test(input, expected) {
+            assert.deepEqual(giveChange(input), expected);
+        }
+
+        test(1, [1]);
+        test(2, [2]);
+        test(3, [2,1]);
+        test(4, [2,2]);
+        test(5, [5]);
+        test(6, [5,1]);
+        test(7, [5,2]);
+        test(8, [5,2,1]);
+        test(9, [5,2,2]);
+        test(10, [5,5]);
+        test(11, [5,5,1]);
+        test(12, [5,5,2]);
+        test(13, [5,5,2,1]);
+    });
+
+    QUnit.test("should throw for invalid input", function (assert) {
+        function test(input) {
+            assert.throws(function () {
+                giveChange(input)
+            })
+        }
+
+        test(0);
+        test(-1);
+        test(Number.MAX_SAFE_INTEGER + 1);
+    })
+</script>
+</body>
+</html>

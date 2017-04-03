@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>shiftFromColsToRows tests</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.3.0.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="https://code.jquery.com/qunit/qunit-2.3.0.js"></script>
+<script src="shiftFromColsToRows.js"></script>
+<script>
+    QUnit.test("should shift data from a column into a row", function (assert) {
+        function test(input, expected) {
+            assert.equal(shiftFromColsToRows(input), expected);
+        }
+
+        test('Imię|Wzrost\nZofia|164\nGrzegorz|187', 'Imię|Zofia|Grzegorz\nWzrost|164|187');
+        test('Imię|Wzrost|Waga\nZofia|164|53\nGrzegorz|187|90', 'Imię|Zofia|Grzegorz\nWzrost|164|187\nWaga|53|90');
+    });
+</script>
+</body>
+</html>
