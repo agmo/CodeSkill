@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>findSmallestMissingInt</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-2.3.3.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/qunit/qunit-2.3.3.js"></script>
+<script>
+    function findMissingPositiveInt(numbers) {
+        const numbersLength = numbers.length;
+
+        //leave early for all negative number
+        if (numbers[numbersLength - 1] <= 0) {
+            return 1;
+        }
+
+        //leave early for all positive numbers without gaps
+        if (numbers[0] + numbersLength - 1 === numbers[numbersLength - 1]) {
+            return numbers[numbersLength - 1] + 1;
+        }
+
+        for (let i = 0; i < (numbersLength - 1); i++) {
+            if (numbers[i] < 0) {
+                continue;
+            }
+
+            if (numbers[i] + 1 !== numbers[i + 1]) {
+                return numbers[i] + 1;
+            }
+        }
+
+        return numbers[numbersLength - 1] + 1;
+    }
+
+    QUnit.test('[-3,-2,-1], missing 1', function (assert) {
+        assert.equal(findMissingPositiveInt([-3,-2,-1]), 1)
+    });
+
+    QUnit.test('[-3,-2,-1,0], missing 1', function (assert) {
+        assert.equal(findMissingPositiveInt([-3,-2,-1,0]), 1)
+    });
+
+    QUnit.test('[5,6,7,8], missing 9', function (assert) {
+        assert.equal(findMissingPositiveInt([5,6,7,8]), 9)
+    });
+
+    QUnit.test('[0,1,2,3], missing 4', function (assert) {
+        assert.equal(findMissingPositiveInt([0,1,2,3]), 4)
+    });
+
+    QUnit.test('[1,2,3,4,7,8], missing 5', function (assert) {
+        assert.equal(findMissingPositiveInt([1,2,3,4,7,8]), 5)
+    });
+
+    QUnit.test('[-4,-3,1,2,3,4,7,8], missing 5', function (assert) {
+        assert.equal(findMissingPositiveInt([-4,-3,1,2,3,4,7,8]), 5)
+    });
+
+    QUnit.test('[-4,-3,0,1,2,3,4,7,8], missing 5', function (assert) {
+        assert.equal(findMissingPositiveInt([-4,-3,0,1,2,3,4,7,8]), 5)
+    });
+
+    QUnit.test('[-3,-2,2,4], missing 3', function (assert) {
+        assert.equal(findMissingPositiveInt([-3,-2,2,4]), 3)
+    });
+
+    QUnit.test('[1], missing 2', function (assert) {
+        assert.equal(findMissingPositiveInt([1]), 2)
+    });
+
+    QUnit.test('[-1], missing 1', function (assert) {
+        assert.equal(findMissingPositiveInt([-1]), 1)
+    });
+
+</script>
+</body>
+</html>
