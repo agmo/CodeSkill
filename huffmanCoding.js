@@ -34,9 +34,21 @@ function createTree(nodes) {
     const weightSum = nodes[0][0] + nodes[1][0];
     const removedChars = [nodes[0][1], nodes[1][1]];
 
-    rest.push([weightSum, removedChars]);
+    const sortedRest = insertIntoSorted(rest, [weightSum, removedChars]);
 
-    return createTree(rest.sort());
+    return createTree(sortedRest);
+}
+
+function insertIntoSorted(arrToInsertInto, itemToInsert) {
+    for (let i = 0, len = arrToInsertInto.length; i < len; i++) {
+        if (arrToInsertInto[i][0] >= itemToInsert[0]) {
+            arrToInsertInto.splice(i, 0, itemToInsert);
+            return arrToInsertInto;
+        }
+    }
+
+    arrToInsertInto.push(itemToInsert);
+    return arrToInsertInto;
 }
 
 function visit(node, code = '') {
